@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.env
+*.log
+vector_db/
+extracted_images/
+raw_data/pdfs/*.pdf
+raw_data/extracted_images/
+raw_data/*.sqlite3
+raw_data/global_*.json
+raw_data/manifest.json
+manifest.json
+.pytest_cache/

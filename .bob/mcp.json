@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "universal-rag-kb": {
+      "command": "./scripts/run_mcp.sh",
+      "args": [],
+      "disabled": false,
+      "alwaysAllow": [
+        "search_kb",
+        "audit_grounding",
+        "get_kb_stats"
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+product_id: "default_product"
+product_name: "General Technical Product"
+expert_persona: "你是一位精通本產品系列架構、安裝配置、故障排除與最佳實踐的原廠首席技術顧問。"
+citation_format: "[來源: {source}, 第 {page} 頁]"
+web_citation_format: "[來源: {url}]"
+
+# 同義詞與縮寫擴展表（查詢時自動將關鍵詞擴展以提升雙軌檢索召回率）
+synonyms: {}
+
+# 領域專有指令 / 術語防幻覺校驗規則
+cli_validation:
+  enabled: false
+  allowlist: []
+  blocklist: {}
+
+# 領域物理與架構防護欄（會同步提供給智能體參考與合規審查）
+domain_guardrails:
+  - "每一條核心技術論點、操作步驟與指令，必須在段落末尾標註官方來源（PDF 頁碼或原始網頁 URL）。"
+  - "若知識庫檢索結果未記載該功能或參數，必須誠實宣告官方未記載，嚴禁臆測。"
+
+# 網站遞迴擷取設定（無產品關鍵字鎖定，支援任何技術文件網站）
+crawler:
+  same_domain_only: true
+  same_path_prefix: true
+  url_allow_patterns: []   # 空陣列代表同網域且同路徑前綴下所有技術頁面皆可遞迴擷取
+  url_exclude_extensions: [".zip", ".exe", ".iso", ".tar", ".gz", ".dmg", ".pkg", ".msi"]
+  auto_download_pdfs: true
+  use_playwright_fallback: true

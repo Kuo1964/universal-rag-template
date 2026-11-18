@@ -1,0 +1,85 @@
+product_id: "ibm_flashsystem"
+product_name: "IBM FlashSystem & Storage Virtualize"
+expert_persona: "你是一位精通 IBM Storage Virtualize 與 FlashSystem 全系列儲存架構（5200 / 7300 / 9500 / 9600 / SVC）的原廠首席資深技術架構師與顧問。"
+citation_format: "[來源: {source}, 第 {page} 頁]"
+web_citation_format: "[來源: {url}]"
+
+# 儲存領域同義詞與縮寫擴展映射
+synonyms:
+  pbha: ["policy-based high availability", "2-site-ha", "mkreplicationpolicy"]
+  pbr: ["policy-based replication", "async-dr", "chvolumegroupreplication"]
+  ndvm: ["volume mobility", "movevolume", "addvolumecopy", "migratevdisk"]
+  fcm: ["flashcore module", "nvme drive"]
+  quorum: ["active quorum disk", "mkipquorum", "lsquorum"]
+  safeguarded: ["safeguarded copy", "chvolumegroup -safeguarded", "mksnapshotpolicy"]
+
+# 官方 CLI 防幻覺白名單與廢棄/偽造指令阻斷映射
+cli_validation:
+  enabled: true
+  allowlist:
+    - "chportethernet"
+    - "cfgportip"
+    - "lsportethernet"
+    - "lsportip"
+    - "lseventlog"
+    - "showtimezone"
+    - "lstimezones"
+    - "mkpartition"
+    - "chpartition"
+    - "lspartition"
+    - "rmpartition"
+    - "mergepartition"
+    - "managegrid"
+    - "lsgrid"
+    - "lsgridpartition"
+    - "mkreplicationpolicy"
+    - "lsreplicationpolicy"
+    - "chvolumegroupreplication"
+    - "lsvolumegroupreplication"
+    - "mkvdisk"
+    - "chvdisk"
+    - "lsvdisk"
+    - "migratevdisk"
+    - "chmigratestatus"
+    - "mkpartnership"
+    - "chpartnership"
+    - "mkipquorum"
+    - "lsquorum"
+  blocklist:
+    chnodeip:
+      replacement: "chportethernet / cfgportip"
+      reason: "舊版 chnodeip 指令已廢棄 (Deprecated)，修改乙太網路埠與 MTU 應使用 chportethernet，設定 IP 應使用 cfgportip。"
+    lserrorlog:
+      replacement: "lseventlog"
+      reason: "官方無 lserrorlog 指令，查詢系統事件與錯誤日誌唯一標準指令為 lseventlog。"
+    lserrorevent:
+      replacement: "lseventlog"
+      reason: "官方無 lserrorevent 指令，請改用 lseventlog。"
+    lsdate:
+      replacement: "showtimezone / lstimezones"
+      reason: "官方無 lsdate 指令，查詢系統時間與時區請使用 showtimezone 或 lstimezones。"
+    importvdisk:
+      replacement: "mkvdisk -image -mdisk <mdisk_name> -mdiskgrp <pool_name> -iogrp <iogrp_name>"
+      reason: "官方手冊中無 importvdisk 指令，納入外部 Image Mode LUN 應使用 mkvdisk -image。"
+    mkstoragepartition:
+      replacement: "mkpartition -name <partition_name>"
+      reason: "官方 CLI 無 mkstoragepartition 指令，建立儲存分區應使用 mkpartition。"
+    lsstoragepartition:
+      replacement: "lspartition / lsgridpartition"
+      reason: "官方 CLI 無 lsstoragepartition 指令，查詢儲存分區應使用 lspartition 或 lsgridpartition。"
+
+# 領域硬體物理邊界與架構防護欄
+domain_guardrails:
+  - "NVMe 控制機箱（FS5200/5300/5600/7200/7300/7600/9200/9500/9600）未內建原生 SAS 連接埠，連接 SAS 擴充櫃需對稱選配 PCIe SAS 介面卡。"
+  - "單一 VDisk 的 Volume Mirroring 最多僅支援 2 個 Copies，嚴禁建議建立第 3 個副本。"
+  - "跨系統 Volume Mobility（8.4.2+）無需 Remote Mirroring 授權；Policy-Based Replication 切換演練請使用 chvolumegroupreplication。"
+  - "每一條核心技術論點、作業步驟與 CLI 指令段落，必須在文末標註官方來源標籤。"
+
+# IBM 官方線上技術文件爬蟲過濾器
+crawler:
+  same_domain_only: true
+  same_path_prefix: true
+  url_allow_patterns: ["flashsystem", "sanvolumecontroller", "san-volume-controller"]
+  url_exclude_extensions: [".zip", ".exe", ".iso", ".tar", ".gz", ".dmg", ".pkg"]
+  auto_download_pdfs: true
+  use_playwright_fallback: true
