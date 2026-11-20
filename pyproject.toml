@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "universal-rag-template"
+version = "0.2.0"
+description = "Universal Dual-Track RAG (ChromaDB + SQLite FTS5) & Multi-Agent MCP Tool for Claude Code, Codex, Antigravity, IBM Bob, and Cursor"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "John Kuo", email = "johnyhkuo@gmail.com" }
+]
+dependencies = [
+    "PyMuPDF>=1.23.0",
+    "chromadb>=0.4.0",
+    "fastembed>=0.2.0",
+    "mcp>=1.0.0",
+    "beautifulsoup4>=4.12.0",
+    "httpx>=0.27.0",
+    "Pillow>=10.0.0",
+    "pydantic>=2.0.0",
+    "playwright>=1.40.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.20.0",
+    "markdownify>=0.11.0",
+    "PyYAML>=6.0.0",
+    "ollama>=0.2.0",
+]
+
+[project.scripts]
+universal-rag = "cli:main"
+
+[tool.setuptools]
+py-modules = [
+    "cli",
+    "config",
+    "profile_loader",
+    "embedding_adapter",
+    "vector_store",
+    "grounding_auditor",
+    "universal_ambiguity_detector",
+    "parser",
+    "ingest",
+    "mcp_server",
+    "rag_core",
+    "web_app",
+]
+packages = ["provisioner", "provisioner.adapters"]
